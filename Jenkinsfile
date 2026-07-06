@@ -72,6 +72,11 @@ spec:
       steps {
         container('docker') {
           sh '''
+            # 1. Install kubectl binary on the fly
+            echo "Installing kubectl..."
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            chmod +x kubectl
+            mv kubectl /usr/local/bin/
             docker stop simple-app || true
             docker rm simple-app || true
             docker run -d -p 8087:3000 --name simple-app simple-app:latest
