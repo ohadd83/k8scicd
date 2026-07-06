@@ -72,6 +72,10 @@ spec:
       steps {
         container('docker') {
           sh '''
+            # 1. Install curl and kubectl using the built-in apk package manager
+            echo "Updating packages and installing curl + kubectl..."
+            apk add --no-cache curl
+
             # 1. Install kubectl binary on the fly
             echo "Installing kubectl..."
             curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
