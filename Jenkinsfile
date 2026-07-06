@@ -76,6 +76,25 @@ spec:
             docker rm simple-app || true
             docker run -d -p 8087:3000 --name simple-app simple-app:latest
             
+# 2. Dynamically create a NodePort service
+            cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Service
+metadata:
+  name: sandbox-nodeport-svc
+  namespace: jenkins
+spec:
+  type: NodePort
+  selector:
+    jenkins/jenkins-jenkins-agent: "true" 
+  ports:
+    - protocol: TCP
+      port: 8087
+      targetPort: 8087
+      nodePort: 32000 # Hardcoding a specific port makes firewall rules easier
+EOF
+
+
             echo "============================================="
             echo "Application is running! Keeping pod alive for 60 seconds..."
             echo "============================================="
