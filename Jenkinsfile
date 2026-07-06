@@ -69,7 +69,7 @@ spec:
             echo "Application is running! Keeping pod alive for 60 seconds..."
             echo "============================================="
             
-            sleep 60
+            sleep 180
           '''
          
         }
