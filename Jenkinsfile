@@ -64,6 +64,13 @@ spec:
             docker stop simple-app || true
             docker rm simple-app || true
             docker run -d -p 8087:3000 --name simple-app simple-app:latest
+            
+            echo "============================================="
+            echo "Application is running! Keeping pod alive for 60 seconds..."
+            echo "============================================="
+            
+            sleep 60
+          '''
           '''
         }
       }
