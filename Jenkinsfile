@@ -52,7 +52,18 @@ spec:
     stage('Build Docker') {
       steps {
         container('docker') {
-          sh 'docker build -t simple-app:latest .'
+          sh '''
+            echo "Waiting for Docker daemon to become ready..."
+            # Loop up to 10 times checking if the daemon is reachable
+            for i in {1..10}; do
+              if docker info >/dev/null 2>&1; then
+                echo "Docker daemon is ready!"
+                break
+              fi
+              echo "Daemon not ready yet, retrying in 3 seconds... ($i/10)"
+              sleep 3
+            done
+            docker build -t simple-app:latest .'''
         }
       }
     }
